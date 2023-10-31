@@ -1,0 +1,44 @@
+ALGORITHM:
+
+1. Create the FP-Tree:
+a) Scan the database to count the frequency of each item and sort the items in descending order of frequency.
+b) Create a root node for the FP-Tree.
+c) For each transaction, insert the items in the transaction into the tree following existing branches or creating new branches as necessary.
+
+2. Mine Frequent Itemsets:
+a) Starting with the least frequent item, create a conditional FP-Tree for each item.
+b) Recursively mine each conditional FP-Tree for frequent itemsets by selecting a prefix path (a path from the root to the item) and finding the frequent itemsets in that path.
+c) Combine the frequent itemsets found in each conditional FP-Tree to obtain the final frequent itemsets.
+
+PSEUDOCODE:
+
+function FP_Growth(database, min_sup)
+{
+    Create an empty FP-Tree
+    For each transaction in the database
+    {
+        Sort the items in the transaction by frequency
+        Insert the sorted transaction into the FP-Tree
+    }
+    For each item in the header table in descending order of frequency:
+    {
+        Find the conditional pattern base for the item
+        Recursively call FP_Growth on the conditional pattern base to build a conditional FP-Tree
+        Combine frequent itemsets from the conditional FP-Tree with the current item to form frequent itemsets
+    }
+    Return the frequent itemsets found
+}
+
+function find_conditional_pattern_base(item, database)
+{
+    Create an empty conditional pattern base
+    For each transaction in the database
+    {
+        If the transaction contains the item
+        {
+            Add the transaction to the conditional pattern base, but remove the item
+        }
+    }
+    Return the conditional pattern base
+}
+
