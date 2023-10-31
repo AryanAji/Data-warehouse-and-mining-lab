@@ -1,0 +1,38 @@
+ALGORITHM:
+
+1.Initialize:-
+a) Create a list of candidate itemsets of length 1 (C1) containing all unique items in the database.
+b) While there are candidate itemsets of length k and k > 0, do the following:
+c) Prune the itemsets that do not meet the minimum support threshold.
+d) Generate candidate itemsets of length (k+1) from the frequent itemsets of length k.
+e) Increase k by 1.
+
+2. For each transaction in the database, count the support for each candidate itemset in Ck by checking if it's a subset of the transaction. Increment the count for each itemset that is a subset of the transaction.
+
+3. Prune candidate itemsets that do not meet the minimum support threshold (min_sup). Keep only those itemsets that have support greater than or equal to min_sup.
+
+4. If there are frequent itemsets of length (k+1), return to step 2 and repeat the process for the next level of itemsets. Otherwise, the algorithm terminates.
+
+
+PSEUDOCODE:
+
+function Apriori(database, min_sup):
+{
+    C1 = list of unique items in the database
+    k = 1
+    
+    while Ck is not empty:
+    {
+        Fk = []
+        for transaction in database
+        {
+            // Count support for each itemset in Ck that is a subset of the transaction
+        }
+        
+        Fk = itemsets in Ck with support ≥ min_sup
+        Ck+1 = generate_candidates(Fk)  // Generate candidate itemsets of length (k+1)
+        k = k + 1
+    }
+    return Union of all frequent itemsets from Fk for all k
+}
+
